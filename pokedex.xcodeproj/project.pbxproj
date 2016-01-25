@@ -13,6 +13,7 @@
 		1C17D1701C56B0AD0076F988 /* pokedex.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 1C17D16E1C56B0AD0076F988 /* pokedex.xcdatamodeld */; };
 		1C17D1721C56B0AD0076F988 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1C17D1711C56B0AD0076F988 /* Assets.xcassets */; };
 		1C17D1751C56B0AD0076F988 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1C17D1731C56B0AD0076F988 /* LaunchScreen.storyboard */; };
+		1C17D17D1C56B3210076F988 /* pokemon.csv in Resources */ = {isa = PBXBuildFile; fileRef = 1C17D17C1C56B3210076F988 /* pokemon.csv */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +25,7 @@
 		1C17D1711C56B0AD0076F988 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		1C17D1741C56B0AD0076F988 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		1C17D1761C56B0AD0076F988 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		1C17D17C1C56B3210076F988 /* pokemon.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = pokemon.csv; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -63,6 +65,7 @@
 				1C17D1731C56B0AD0076F988 /* LaunchScreen.storyboard */,
 				1C17D1761C56B0AD0076F988 /* Info.plist */,
 				1C17D16E1C56B0AD0076F988 /* pokedex.xcdatamodeld */,
+				1C17D17C1C56B3210076F988 /* pokemon.csv */,
 			);
 			path = pokedex;
 			sourceTree = "<group>";
@@ -127,6 +130,7 @@
 			files = (
 				1C17D1751C56B0AD0076F988 /* LaunchScreen.storyboard in Resources */,
 				1C17D1721C56B0AD0076F988 /* Assets.xcassets in Resources */,
+				1C17D17D1C56B3210076F988 /* pokemon.csv in Resources */,
 				1C17D16D1C56B0AD0076F988 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

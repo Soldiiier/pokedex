@@ -205,6 +205,9 @@
                                             <segment title="Moves"/>
                                         </segments>
                                         <color key="tintColor" red="0.93725490199999995" green="0.22352941179999999" blue="0.098039215690000001" alpha="1" colorSpace="calibratedRGB"/>
+                                        <connections>
+                                            <action selector="segmentedControl:" destination="21F-IB-hCL" eventType="valueChanged" id="5uP-Qs-XAY"/>
+                                        </connections>
                                     </segmentedControl>
                                     <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="rp8-es-Tmd">
                                         <rect key="frame" x="0.0" y="61" width="560" height="120"/>
@@ -216,7 +219,7 @@
                                                     <constraint firstAttribute="height" constant="120" id="dK1-LZ-EJM"/>
                                                 </constraints>
                                             </imageView>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Loading" lineBreakMode="tailTruncation" numberOfLines="10" baselineAdjustment="alignBaselines" minimumFontSize="8" translatesAutoresizingMaskIntoConstraints="NO" id="3uN-rP-mb3">
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Loading..." lineBreakMode="tailTruncation" numberOfLines="10" baselineAdjustment="alignBaselines" minimumFontSize="8" translatesAutoresizingMaskIntoConstraints="NO" id="3uN-rP-mb3">
                                                 <rect key="frame" x="125" y="0.0" width="435" height="120"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
@@ -329,8 +332,8 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6G7-8i-OoF">
                                 <rect key="frame" x="0.0" y="435" width="600" height="29"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Next Evolution:" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="m66-bG-JZu">
-                                        <rect key="frame" x="250" y="6" width="101.5" height="18"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text=" " textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="m66-bG-JZu">
+                                        <rect key="frame" x="299" y="6" width="4" height="18"/>
                                         <fontDescription key="fontDescription" type="system" weight="light" pointSize="15"/>
                                         <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <nil key="highlightedColor"/>
@@ -354,18 +357,48 @@
                                     <constraint firstAttribute="height" relation="lessThanOrEqual" constant="120" id="KVF-XV-vwe"/>
                                 </constraints>
                             </stackView>
+                            <tableView hidden="YES" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="HA2-f2-F16">
+                                <rect key="frame" x="20" y="124" width="560" height="468"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="MovesCell" textLabel="Rs9-QU-aJj" style="IBUITableViewCellStyleDefault" id="a0q-HP-bl9" customClass="MovesCell" customModule="pokedex" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="28" width="560" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="a0q-HP-bl9" id="ukB-Mx-wNb">
+                                            <rect key="frame" x="0.0" y="0.0" width="560" height="43.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Rs9-QU-aJj">
+                                                    <rect key="frame" x="15" y="0.0" width="530" height="43.5"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                        </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="moveName" destination="Rs9-QU-aJj" id="VZo-Zh-wPm"/>
+                                        </connections>
+                                    </tableViewCell>
+                                </prototypes>
+                            </tableView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstAttribute="trailingMargin" secondItem="HA2-f2-F16" secondAttribute="trailing" id="0wy-sZ-a87"/>
                             <constraint firstItem="teO-Lh-Ts2" firstAttribute="leading" secondItem="g21-qh-iCT" secondAttribute="leadingMargin" id="755-7M-ZDm"/>
                             <constraint firstAttribute="trailingMargin" secondItem="vGp-39-NbD" secondAttribute="trailing" id="Bby-kK-D0b"/>
                             <constraint firstItem="Vci-T9-si2" firstAttribute="leading" secondItem="g21-qh-iCT" secondAttribute="leadingMargin" constant="-20" id="DNK-oW-TSz"/>
                             <constraint firstItem="6G7-8i-OoF" firstAttribute="leading" secondItem="g21-qh-iCT" secondAttribute="leading" id="G7z-vr-eWo"/>
                             <constraint firstItem="6G7-8i-OoF" firstAttribute="top" secondItem="teO-Lh-Ts2" secondAttribute="bottom" constant="8" id="J6A-HT-OXv"/>
                             <constraint firstItem="teO-Lh-Ts2" firstAttribute="top" secondItem="Vci-T9-si2" secondAttribute="bottom" constant="8" id="K4l-uB-vnT"/>
+                            <constraint firstItem="HA2-f2-F16" firstAttribute="leading" secondItem="g21-qh-iCT" secondAttribute="leadingMargin" id="LQO-lG-o96"/>
                             <constraint firstItem="vGp-39-NbD" firstAttribute="top" secondItem="6G7-8i-OoF" secondAttribute="bottom" constant="8" id="LU5-MU-l90"/>
                             <constraint firstItem="vGp-39-NbD" firstAttribute="leading" secondItem="g21-qh-iCT" secondAttribute="leadingMargin" id="Mer-mt-7Oz"/>
+                            <constraint firstItem="HA2-f2-F16" firstAttribute="top" secondItem="ANW-LH-KqB" secondAttribute="top" id="Ok0-hh-4g7"/>
                             <constraint firstAttribute="trailing" secondItem="6G7-8i-OoF" secondAttribute="trailing" id="YyH-Sw-xbt"/>
+                            <constraint firstAttribute="bottomMargin" secondItem="HA2-f2-F16" secondAttribute="bottom" constant="8" id="g8T-8K-51P"/>
                             <constraint firstAttribute="trailingMargin" secondItem="Vci-T9-si2" secondAttribute="trailing" constant="-20" id="kgX-HQ-Oni"/>
                             <constraint firstAttribute="trailingMargin" secondItem="teO-Lh-Ts2" secondAttribute="trailing" id="mDL-H2-IXe"/>
                             <constraint firstItem="Vci-T9-si2" firstAttribute="top" secondItem="g21-qh-iCT" secondAttribute="topMargin" id="nPa-aC-D2p"/>
@@ -378,10 +411,12 @@
                         <outlet property="descriptionLabel" destination="3uN-rP-mb3" id="FPh-fT-wgw"/>
                         <outlet property="evoImage1" destination="gK1-pd-UMk" id="TKY-aX-NCS"/>
                         <outlet property="evoLabel" destination="m66-bG-JZu" id="RNa-Uc-Rhu"/>
+                        <outlet property="evoSubView" destination="6G7-8i-OoF" id="RGI-vh-OXJ"/>
                         <outlet property="heightLabel" destination="mAq-Mn-gbl" id="6Yh-hK-Ipo"/>
                         <outlet property="mainImage" destination="ANW-LH-KqB" id="kr2-6g-qbE"/>
                         <outlet property="nameLabel" destination="ehi-v0-cck" id="K9t-a5-CB7"/>
                         <outlet property="pokedexIdLabel" destination="6ZO-Jn-gd7" id="afe-Pd-LsV"/>
+                        <outlet property="tableView" destination="HA2-f2-F16" id="itl-6v-1xc"/>
                         <outlet property="typeLabel" destination="MuM-Yi-eVS" id="0uU-hl-f2t"/>
                         <outlet property="weightLabel" destination="R0A-D6-wsE" id="gSA-a5-BMC"/>
                     </connections>

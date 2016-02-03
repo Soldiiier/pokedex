@@ -20,6 +20,8 @@ class Pokemon {
     private var _nextEvoLevel: String!
     private var _nextEvoId: String!
     private var _pokemonUrl: String!
+    private var _movesList: Dictionary<String, String>!
+    private var _movesArray: [String]!
     
     var name: String {
         return _name
@@ -88,13 +90,27 @@ class Pokemon {
     
     var nextEvoId: String {
         if _nextEvoId == nil {
-                _nextEvoId = ""
+            _nextEvoId = ""
         }
         return _nextEvoId
     }
     
     var pokeminUrl: String {
         return _pokemonUrl
+    }
+    
+    var movesList: Dictionary<String, String> {
+        if _movesList == nil {
+            _movesList = ["":""]
+        }
+        return _movesList
+    }
+    
+    var movesArray: [String] {
+        if _movesArray == nil {
+            _movesArray = []
+        }
+        return _movesArray
     }
     
     init(name: String, pokedexId: Int) {
@@ -114,7 +130,6 @@ class Pokemon {
                     let json = try NSJSONSerialization.JSONObjectWithData(responseData, options: NSJSONReadingOptions.AllowFragments)
                     
                     if let pokemonJSON = json as? Dictionary<String, AnyObject> {
-                        //print(pokemonJSON)
                         
                         if let weight = pokemonJSON["weight"] as? String {
                             self._weight = weight
@@ -146,7 +161,6 @@ class Pokemon {
                                     }
                                 }
                             }
-                            print(self._type.capitalizedString)
                         }
                         
                         if let descArray = pokemonJSON["descriptions"] as? [Dictionary<String, String>] {
@@ -161,14 +175,11 @@ class Pokemon {
                                         do {
                                             let json = try NSJSONSerialization.JSONObjectWithData(newResponseData, options: NSJSONReadingOptions.AllowFragments)
                                             
-                                            if let parsedDescJSON = json as? Dictionary<String, AnyObject> {
-                                                if let desc = parsedDescJSON["description"] as? String {
+                                            if let descJSON = json as? Dictionary<String, AnyObject> {
+                                                if let desc = descJSON["description"] as? String {
                                                     self._description = desc
-                                                    
-                                                    print(self._description)
                                                 }
                                             }
-                                            
                                             completed()
                                         } catch {
                                             print("could not serialise")
@@ -188,21 +199,63 @@ class Pokemon {
                                         if let levelUp = evoArray[0]["level"] as? Int {
                                             self._nextEvoLevel = "\(levelUp)"
                                         }
-                                        
                                         self._nextEvoId = evoToPokeId
                                         self._nextEvoText = toName
                                     }
                                 }
                             }
                         }
+                        
+                        if let movesArr = pokemonJSON["moves"] as? [String] {
+                            self._movesArray = []
+                            
+                            for var index = 0; index < movesArr.count; ++index {
 
+                            }
+                        }
+
+                        if let movesDict = pokemonJSON["moves"] as? [Dictionary<String, AnyObject>] {
+
+                            self._movesList = [:]
+                            self._movesArray = []
+                            for var index = 0; index < movesDict.count; ++index {
+
+                                if let move = movesDict[index]["name"]! as? String {
+                                    //self._movesList[move] = "Description pending"
+                                    self._movesArray.append(move)
+                                    if let moveDescApiUrl = movesDict[index]["resource_uri"] {
+                                        let fullMoveDescApiUrl = "\(URL_BASE)\(moveDescApiUrl)"
+                                        let moveDescApiNSUrl = NSURL(string: fullMoveDescApiUrl)!
+                                        
+                                        let movesSession = NSURLSession.sharedSession()
+
+                                        movesSession.dataTaskWithURL(moveDescApiNSUrl) { (data: NSData?, response: NSURLResponse?, error: NSError?) -> Void in
+
+                                            if let moveResponseData = data {
+                                                do {
+                                                    let json = try NSJSONSerialization.JSONObjectWithData(moveResponseData, options: NSJSONReadingOptions.AllowFragments)
+
+                                                    if let moveDescJSON = json as? Dictionary<String, AnyObject> {
+                                                        if let parsedMoveDesc = moveDescJSON["description"] as? String {
+                                                            self._movesList[move] = parsedMoveDesc
+                                                        }
+                                                        completed()
+                                                    }
+                                                } catch {
+                                                    print("could not serialise")
+                                                }
+                                            }
+                                        }.resume()
+                                    }
+                                }
+                            }
+                        }
                     }
                     completed()
                 } catch {
                     print("could not serialise")
                 }
             }
-            
         }.resume()
     }
 }

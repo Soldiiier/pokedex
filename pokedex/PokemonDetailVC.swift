@@ -8,7 +8,7 @@
 
 import UIKit
 
-class PokemonDetailVC: UIViewController {
+class PokemonDetailVC: UIViewController, UITableViewDelegate, UITableViewDataSource  {
     
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var mainImage: UIImageView!
@@ -21,11 +21,16 @@ class PokemonDetailVC: UIViewController {
     @IBOutlet weak var baseAttackLabel: UILabel!
     @IBOutlet weak var evoLabel: UILabel!
     @IBOutlet weak var evoImage1: UIImageView!
+    @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var evoSubView: UIView!
     
     var pokemon: Pokemon!
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        tableView.delegate = self
+        tableView.dataSource = self
+        
 
         // Do any additional setup after loading the view.
         
@@ -35,7 +40,10 @@ class PokemonDetailVC: UIViewController {
         pokemon.downloadPokemonDetails { () -> () in
             //this will be called after donwload is done
             dispatch_async(dispatch_get_main_queue()) {
-                self.updateUI()
+                self.showMoves()
+                self.showBio()
+                self.tableView.reloadData()
+                
             }
         }
     }
@@ -54,7 +62,10 @@ class PokemonDetailVC: UIViewController {
     }
     */
     
-    func updateUI() {
+    func showBio() {
+        tableView.hidden = true
+        evoSubView.hidden = false
+        
         descriptionLabel.text = pokemon.description
         typeLabel.text = pokemon.type.capitalizedString
         heightLabel.text = pokemon.height
@@ -73,9 +84,45 @@ class PokemonDetailVC: UIViewController {
             evoImage1.image = UIImage(named: pokemon.nextEvoId)
             evoLabel.text = evoString
         }
+        
+    }
+    
+    func showMoves() {
+        tableView.hidden = false
+        evoSubView.hidden = true
+
     }
     
     @IBAction func backButtonPressed(sender: AnyObject) {
         dismissViewControllerAnimated(true, completion: nil)
     }
+    
+    @IBAction func segmentedControl(sender: UISegmentedControl) {
+        if sender.selectedSegmentIndex == 1 {
+            self.showMoves()
+        } else {
+            tableView.reloadData()
+            self.showBio()
+        }
+    }
+    
+    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return pokemon.movesArray.count
+    }
+    
+    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        if let cell = tableView.dequeueReusableCellWithIdentifier("MovesCell") as? MovesCell {
+            let moves = self.pokemon.movesArray[indexPath.row]
+            cell.configureCell(moves)
+            return cell
+        } else {
+            return UITableViewCell()
+        }
+
+    }
+    
+    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+        return 1
+    }
+    
 }
